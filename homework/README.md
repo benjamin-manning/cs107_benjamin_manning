@@ -9,7 +9,7 @@
 
 | Good Ice Cream|   Meh         | vanilla     |
 | ------------- |:-------------:| -----------:|
-| Brownie batter|lebron James   | $1600       |
+| Brownie batter|lebron James   | also meh    |
 | chocolate     | apples        |it's a table |
 | zebra stripes | cleaning      |    ??       |
 
