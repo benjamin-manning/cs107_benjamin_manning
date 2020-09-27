@@ -5,6 +5,8 @@ from math import pi, sin, cos
 
 ### Closure defined up here
 fig = plt.figure(figsize=(6,6))
+
+# Defining The hour closure
 def hour_closure(r):
     def hour_hand(hour_theta):
         nonlocal r
@@ -12,6 +14,7 @@ def hour_closure(r):
         return .5*r*cos(hour_theta), .5*r*sin(hour_theta)
     return hour_hand
 
+# Defining The minute closure
 def minute_closure(r):
     def minute_hand(minute_theta):
         nonlocal r
@@ -19,6 +22,8 @@ def minute_closure(r):
         return r*cos(minute_theta), r*sin(minute_theta)
     return minute_hand
 
+
+# Defining The second closure
 def second_closure(r):
     def second_hand(second_theta):
         nonlocal r
@@ -26,6 +31,7 @@ def second_closure(r):
         return 1.3*r*cos(second_theta), 1.3*r*sin(second_theta)
     return second_hand
 
+# Creating a function to get time
 def get_time():
     currentDT = datetime.datetime.now()
     hour = currentDT.hour
@@ -45,8 +51,8 @@ def get_theta(hour, minute, second):
     second_theta = 90 - 6*second
     return hour_theta, minute_theta, second_theta
 
-x=True
-count = 60
+# Creating the while loop with optional timing for how long the clock should last
+running_time = 500
 def show_clock(animation_length):
     while animation_length > 0:
         r = 10
@@ -71,5 +77,5 @@ def show_clock(animation_length):
         plt.pause(.01)
         plt.cla()
         animation_length -=1
-show_clock(500)
+show_clock(running_time)
 
