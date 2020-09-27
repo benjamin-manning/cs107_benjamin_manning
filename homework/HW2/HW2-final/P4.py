@@ -73,4 +73,4 @@ plt.plot([0, x_second], [0, y_second], 'g')
 plt.show()
 plt.pause(1)
 plt.cla()
-exit
+exit(1)
