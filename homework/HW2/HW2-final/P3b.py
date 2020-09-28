@@ -5,14 +5,16 @@ def make_withdrawal(init_balance):
             if withdrawal_amount > init_balance:
                 return 'Balance must be greater than withdrawal amount'
             else:
-                balance = init_balance - withdrawal_amount
+                balance = balance - withdrawal_amount
                 return balance
         except TypeError:
             return 'Both Withdrawal and balance amounts must be numbers'
+        except UnboundLocalError:
+            return 
     return new_balance
 
 
-print("Once again, this doesn't work because we are using the local and initially submitted balance to the make_withdrawal function. We need to use the non-local balance in order to prevent the initial balance from reseting.")
-wd= make_withdrawal(1000)
+print("This doesn't work because we are callng a nonlocal variable locally - so we get an unbound local error. If we have a name binding on the inner function, it will reference that inner binding always unless declare dotherwise. We need to use the non-local balance in order to prevent the initial balance from reseting.")
+wd = make_withdrawal(1000)
 print(wd(800))
 print(wd(150))

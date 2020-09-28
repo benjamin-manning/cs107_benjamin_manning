@@ -1,4 +1,7 @@
 def dna_complement(dna_string):
+    if not isinstance(dna_string, str):
+        print("Input must be a string")
+        return
     if len(dna_string) == 0:
         print('Input must be nonzero in length')
         return
@@ -23,4 +26,3 @@ print(f'The complement DNA string is {dna_comp}')
 print('Example invalid input string is ACIJVGCT83GGTCA')
 inv_dna_comp = dna_complement('ACIJVGCT83GGTCA')
 print(inv_dna_comp )
-
