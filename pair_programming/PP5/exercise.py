@@ -33,5 +33,3 @@ inputs = np.random.uniform(0.0, 1.0, 100).reshape(1,-1)
 
 h1 = layer1.forward(inputs)
 h2 = layer2.forward(h1)
-
-print(layer1==layer2)
