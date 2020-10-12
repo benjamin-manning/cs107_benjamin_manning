@@ -2,9 +2,6 @@ import numpy as np
 from numpy import transpose, dot, ones, hstack, identity
 from numpy.linalg import pinv
 from sklearn import datasets
-#from sklearn.linear_model import LinearRegression as lr
-#from sklearn.linear_model import Ridge
-#from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 
 

@@ -3,10 +3,6 @@ class AccountType(Enum):
     SAVINGS = 1
     CHECKING = 2
 
-#print(AccountType.SAVINGS == AccountType.SAVINGS)
-#print(AccountType.SAVINGS == AccountType.CHECKING)
-#print(AccountType.SAVINGS.name)
-
 class BankAccount():
     
     def __init__(self, owner, accountType: AccountType):
@@ -266,7 +262,3 @@ def ATMSession(BankUser):
             else:
                 print('Please Select a valid action')
     return Interface
-
-User = BankUser('Ben')
-Interface = ATMSession(User)
-Interface()

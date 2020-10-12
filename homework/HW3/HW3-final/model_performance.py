@@ -1,9 +1,9 @@
+import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from Regression import Regression as reg
 from Regression import LinearRegression as linear
 from Regression import RidgeRegression as ridge
-import matplotlib.pyplot as plt
 
 dataset = datasets.load_boston()
 X_train, X_test, y_train, y_test = train_test_split(dataset['data'], 
