@@ -40,7 +40,7 @@ print('Answer to Q-a: The most accurate value of h is 10e-7. When h is too small
     it is innaccurate because of the issues machine precision. When h is too big, the estimation is not accurate')
 
 print('Answer to Q-b: Automatic differentiaion helps address these problems because it removes h from the equation. \
-    So, we will not have eproblems with machine precision nor innacuracy due to large h. This happens because we continuously \
+    So, we will not have eproblems with machine precision nor innacuracy due to large h - no parameter necessary. This happens because we continuously \
         recursively take the analytical derivative of the "sub" functions of the main function we try to evaluate')
 
 plt.show()
