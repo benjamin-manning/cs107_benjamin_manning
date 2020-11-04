@@ -26,12 +26,14 @@ class Animal:
     
     @species.setter
     def species(self,into):
-        if into in self.valid_species:
-            self._species = into
-            return self._species 
-        else:
-            raise Exception('Not a valid species')
+        assert into in Animal.valid_species, Exception(f'invalid species: {into}')
+        self._species = into
 
+        #if into in self.valid_species:
+            #self._species = into
+            #return self._species 
+        #else:
+            #raise Exception('Not a valid species')
 
     def __repr__(self):
         return f'{self.name} ({self._species})'
