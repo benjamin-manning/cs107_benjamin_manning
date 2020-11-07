@@ -26,13 +26,13 @@ class LinkedList:
         return self._head if i == 0 else self._tail[i-1]
 
     def prepend(self, val):
-        pass # TODO
+        return LinkedList(val,LinkedList(self._head,self._tail))
 
     def append(self, val):
-        pass # TODO
+        return LinkedList(self._head, self._tail.append(val))
 
     def for_each(self, fun):
-        pass # TODO
+        return LinkedList(fun(self._head),self._tail.for_each(fun))
 
     def summation(self):
         return self._head + self._tail.summation() if self._tail else self._head
@@ -43,8 +43,9 @@ class LinkedList:
         return smaller(self._head, self._tail.minimum()) if self._tail else self._head
 
     def reduce_right(self, fun):
-        pass # TODO
+        return fun(self._head,self._tail.reduce_right(fun)) if self._tail else self._head
 
+    
 class Nil():
 
     def __str__(self): 
@@ -63,10 +64,31 @@ class Nil():
         return False
 
     def prepend(self, val): 
-        pass # TODO
+        return LinkedList(val, Nil())
 
     def append(self, val):  
         return LinkedList(val, Nil())
 
     def for_each(self, fun):
-        pass # TODO
+        return Nil()
+
+        
+if __name__ == "__main__":
+    ll=Nil()
+    ll=ll.prepend(0).prepend(-1).prepend(-2)
+    ll=ll.append(1).append(2).append(3)
+    print(ll)
+    # print(dir(ll))
+
+    l = Nil().prepend(1).prepend(2).prepend(3).prepend(4)
+    def square(x):
+        return x**2
+    print(l)
+    print(l.for_each(square))
+
+
+    l = Nil().prepend(1).prepend(2).prepend(3).prepend(4)
+    def smaller(a, b): # our "combine" function
+        return a if a < b else b
+    print(l)
+    print(l.reduce_right(smaller))

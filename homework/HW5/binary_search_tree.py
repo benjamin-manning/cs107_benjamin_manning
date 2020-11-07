@@ -31,37 +31,28 @@ class BSTTable:
     def _put(self, node, key, val):
         if node == None:
             return BSTNode(key,val)
-        if key > node.key:
+        elif key > node.key:
             node.right = self._put(node.right, key,val)
             return node
-        if key < node.key:
+        elif key < node.key:
             node.left = self._put(node.left, key,val) 
             return node
-        if key == node.key:
+        else:
             node.val = val 
             return node
         node.size = self._size(node.right) +  self._size(node.left) + 1
 
     def _get(self, node, key):
-        print(node.key)
         if node == None:
             raise KeyError(f"No match for {key}")
-        if key > node.key:
-            print('right')
-            #print(node.key)
-            #print(key)
-            #print(node.right)
-            self._get(node.right, key)
-        if key < node.key:
-            print('left')
-            #print(node.key)
-            #print(key)
-            #print(node.left)
-            self._get(node.left, key)
-        if key == node.key:
-            print('match')
-            print(node.val)
-            return node.val
+        elif key > node.key:
+            val = self._get(node.right, key)
+        elif key < node.key:
+            val = self._get(node.left, key)
+        else:
+            val = node.val
+            print(val)
+        return val
 
     @staticmethod
     def _size(node):
@@ -73,5 +64,5 @@ greektoroman.put('Eros',    'Cupid')
 greektoroman.put('Aphrodite',   'Venus')
 greektoroman.put('Zeus',   'Jupyter')
 greektoroman.put('Ares',   'Mars')
-#greektoroman.get('Zeus')
+greektoroman.get('Zeus')
 print(greektoroman)
