@@ -29,26 +29,36 @@ class BSTTable:
         return self._get(self._root, key)
 
     def _put(self, node, key, val):
+        #end of recursion call
         if node == None:
             return BSTNode(key,val)
+        #check if the key is to the right of the node
         elif key > node.key:
             node.right = self._put(node.right, key,val)
             return node
+        #check if the key is to the left of the node
         elif key < node.key:
             node.left = self._put(node.left, key,val) 
             return node
+        #check if the key is the same as the val
         else:
+            #update the value of the node
             node.val = val 
             return node
+        #adding to the node size
         node.size = self._size(node.right) +  self._size(node.left) + 1
 
     def _get(self, node, key):
+        #end of recursion call
         if node == None:
             raise KeyError(f"No match for {key}")
+        #check if the key is to the right of the node
         elif key > node.key:
             val = self._get(node.right, key)
+        #check if the key is to the left of the node
         elif key < node.key:
             val = self._get(node.left, key)
+         #check if the key is the same as the val
         else:
             val = node.val
             print(val)
@@ -57,12 +67,3 @@ class BSTTable:
     @staticmethod
     def _size(node):
         return node.size if node else 0
-
-greektoroman = BSTTable()
-greektoroman.put('Athena',    'Minerva')
-greektoroman.put('Eros',    'Cupid')
-greektoroman.put('Aphrodite',   'Venus')
-greektoroman.put('Zeus',   'Jupyter')
-greektoroman.put('Ares',   'Mars')
-greektoroman.get('Zeus')
-print(greektoroman)

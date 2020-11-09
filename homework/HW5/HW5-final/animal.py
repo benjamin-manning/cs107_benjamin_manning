@@ -20,22 +20,18 @@ class Animal:
         self.name = name
         self._species = species
     
+    #adding property director
     @property
     def species(self):
         return self._species 
     
+    #updating species method with species setter
     @species.setter
     def species(self,into):
+        #testing to see if a valid species
         assert into in Animal.valid_species, Exception(f'invalid species: {into}')
+        #returning the updated species
         self._species = into
 
     def __repr__(self):
         return f'{self.name} ({self._species})'
-
-dog = Animal('Fido', 'dog')
-print(dog.species)
-
-dog.species = 'cat'
-print(dog.species)
-
-dog.species = 'TheThing'
