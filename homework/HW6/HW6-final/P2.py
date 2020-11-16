@@ -60,3 +60,6 @@ class Heap:
     def build_heap(self) -> None:
         # TODO: implement
         pass
+
+h = Heap([-1,0,0,15,23,1,2,3])
+print(h)

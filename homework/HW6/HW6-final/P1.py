@@ -49,6 +49,58 @@ class BSTTable:
         else:
             return node.val
 
+    #removing smalles node
+    def _removemin(self, node):
+        if node.left == None:
+            return node.right
+        #recursivelt checking to remove
+        node.left = self._removemin(node.left)
+        #updating the saize
+        node.size = node.size = 1 + self._size(node.left) + self._size(node.right)
+        return node
+
+    #adding the provided remove function
+    def remove(self, key):
+        self._root = self._remove(self._root, key)
+
+    def _remove(self, node, key):
+        #check recursive break
+        if node == None:
+            return None
+        #check left
+        if key < node.key:
+            node.left =  self._remove(node.left, key)
+        #check right
+        elif key > node.key:
+            node.right =  self._remove(node.left, key)
+        #check match!
+        if key == node.key:
+            if node.right == None:
+                return node.left
+            if node.left == None:
+                return node.right
+
+            t_new = node
+            node.right = self._removemin(t_new.right)
+            node.left = t_new.left
+
+            node.size = node.size = 1 + self._size(node.left) + self._size(node.right)
+        else:
+            raise KeyError(f'{key} was not found')
+
+        return node
+        
+        
+
     @staticmethod
     def _size(node):
         return node.size if node else 0
+
+t = BSTTable()
+t.put(5, 'a')
+t.put(1, 'b')
+t.put(2, 'c')
+t.put(0, 'd')
+#print(t._remove(t._root, 5))
+print(t._remove(t._remove(t._root, 5), 1))
+#print(t._remove(t._root, 10))
