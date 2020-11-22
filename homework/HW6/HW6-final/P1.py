@@ -10,7 +10,6 @@ class BSTNode:
                '\n|\n|-(L)->' + '\n|      '.join(str(self.left ).split('\n')) + \
                '\n|\n|-(R)->' + '\n|      '.join(str(self.right).split('\n'))
 
-
 class BSTTable:
     def __init__(self):
         self._root = None
@@ -49,58 +48,123 @@ class BSTTable:
         else:
             return node.val
 
-    #removing smalles node
-    def _removemin(self, node):
-        if node.left == None:
-            return node.right
-        #recursivelt checking to remove
-        node.left = self._removemin(node.left)
-        #updating the saize
-        node.size = node.size = 1 + self._size(node.left) + self._size(node.right)
-        return node
-
-    #adding the provided remove function
-    def remove(self, key):
-        self._root = self._remove(self._root, key)
-
-    def _remove(self, node, key):
-        #check recursive break
-        if node == None:
-            return None
-        #check left
-        if key < node.key:
-            node.left =  self._remove(node.left, key)
-        #check right
-        elif key > node.key:
-            node.right =  self._remove(node.left, key)
-        #check match!
-        if key == node.key:
-            if node.right == None:
-                return node.left
-            if node.left == None:
-                return node.right
-
-            t_new = node
-            node.right = self._removemin(t_new.right)
-            node.left = t_new.left
-
-            node.size = node.size = 1 + self._size(node.left) + self._size(node.right)
-        else:
-            raise KeyError(f'{key} was not found')
-
-        return node
-        
-        
-
     @staticmethod
     def _size(node):
         return node.size if node else 0
 
-t = BSTTable()
-t.put(5, 'a')
-t.put(1, 'b')
-t.put(2, 'c')
-t.put(0, 'd')
-#print(t._remove(t._root, 5))
-print(t._remove(t._remove(t._root, 5), 1))
-#print(t._remove(t._root, 10))
+    #Adding _removemin
+    def _removemin(self,node):
+        #Ending Recursive Call
+        if node.left is None:
+            return node.right
+        #rercusively going back to _removemin
+        node.left = self._removemin(node.left)
+        #updating size
+        node.size = 1 + self._size(node.left) + self._size(node.right)
+        return node
+
+    #Adding remove Mode
+    def remove(self, key):
+        self._root = self._remove(self._root, key)
+    
+    #Adding find min node to make _remove easier
+    def _getmin(self,node):
+        if node.left is None:
+            return node
+        node.left = self._min(node.left)
+
+    def _remove(self, node, key):
+        #determining recursive stop
+        if node is None:
+            return None
+        #checking if key is smaller
+        if key < node.key:
+            node.left = self._remove(node.left,key)
+        #checkign if key is bigger
+        elif key> node.key:
+            node.right = self._remove(node.right,key)
+        #checking if key is same
+        if key == node.key:
+            if node.right is None:
+                return node.left
+            if node.left is  None:
+                return node.right
+            #making a copy of node
+            new_node=node
+            #getting smallest
+            node=self._getmin(node.right)
+            node.right = self._removemin(new_node.right)
+            node.left = new_node.left
+            node.size = 1 + self._size(node.left) + self._size(node.right)
+
+        else:
+            raise KeyError(f'The \'{key}\' key does match.')
+
+        return node
+
+from enum import Enum
+
+class DFSTraversalTypes(Enum):
+    PREORDER = 1
+    INORDER = 2
+    POSTORDER = 3
+
+class DFSTraversal():
+    def __init__(self, tree: BSTTable, traversalType: DFSTraversalTypes):
+        self.tree=tree
+        self.traversalType=traversalType
+        self.values = []
+        self.index = 0
+
+        if self.traversalType == DFSTraversalTypes.INORDER:
+            self.inorder(self.tree)
+        elif self.traversalType == DFSTraversalTypes.PREORDER:
+            self.preorder(self.tree)
+        elif self.traversalType == DFSTraversalTypes.POSTORDER:
+            self.postorder(self.tree)
+        else:
+            raise Exception('unknown traversal type') 
+
+    def __iter__(self):
+        return self
+        
+    def __next__(self):
+        try:
+            self.index+=1
+            return self.values[self.index-1]
+
+        except IndexError:
+            raise StopIteration()
+
+    def inorder(self, bst: BSTTable):
+        self._inorder(bst._root)
+
+    #adding hidden in order function to perform inorder (I COULDN'T FIGURE OUT HOW TO DO IT WITHOUT)
+    def _inorder(self, node):
+        if node is None:
+            return None
+        self._inorder(node.left)
+        self.values.append(node)
+        self._inorder(node.right)
+        
+    def preorder(self, bst: BSTTable):
+        node = bst._root
+        #check stopping condition
+        if node is None:
+            return None
+        #append the node from the beginng
+        self.values.append(node)
+        self.preorder(node.left)
+        self.preoder(node.right)
+
+    def postorder(self, bst: BSTTable):
+        node = bst._root
+        #check stopping condition
+        if node is None:
+            return None
+        #checking left
+        self._postorder(node.left)
+        #checking right
+        self._postoder(node.right)
+        #adding to list
+        self.values.append(node)    
