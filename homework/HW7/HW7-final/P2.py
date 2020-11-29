@@ -98,7 +98,7 @@ best_id = best_fetch[0][0]
 best_score = best_fetch[0][1]
 
 print(f"Best model id: {best_id}")
-print(f"Best validation score: {best_score:.4f}")
+print(f"Best validation score: {best_score:.5f}")
 
 #getting features of best model
 cursor.execute(f"SELECT feature_name, value FROM model_coefs WHERE id={best_id}")
@@ -113,12 +113,11 @@ test_model = LogisticRegression(solver='liblinear', penalty='l1', random_state=8
 test_model.fit(X_train, y_train)
 
 # Manually change fit parameters
-
 test_model.coef_ = np.array([coef_vals[1:]])
 test_model.intercept_ = np.array([coef_vals[0]])
 
 test_score = test_model.score(X_test, y_test)
-print(f'Reproduced best validation score: {test_score}')
+print(f'Reproduced best validation score: {test_score:5f}')
 
 db.commit()
 db.close()
