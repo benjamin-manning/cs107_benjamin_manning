@@ -91,14 +91,6 @@ penalized_model.fit(X_train, y_train)
 #3rd model
 save_to_database(3, 'L1 penalty mode', db, penalized_model, X_train, X_test, y_train, y_test)
 
-
-def viz_tables(cols, query):
-    q = cursor.execute(query).fetchall()
-    framelist = dict()
-    for i, col_name in enumerate(cols):
-        framelist[col_name] = [row[i] for row in q]
-    return pd.DataFrame.from_dict(framelist)
-
 #getting best model and id
 cursor.execute("SELECT id, MAX(test_score) FROM model_results")
 best_fetch = cursor.fetchall()
@@ -111,8 +103,22 @@ print(f"Best validation score: {best_score:.4f}")
 #getting features of best model
 cursor.execute(f"SELECT feature_name, value FROM model_coefs WHERE id={best_id}")
 coefficients = cursor.fetchall()
+coef_vals = np.array([])
 for coef in coefficients:
     print(f"{coef[0]}: {coef[1]}")
+    coef_vals = np.append(coef_vals,coef[1])
+
+
+test_model = LogisticRegression(solver='liblinear', penalty='l1', random_state=87, max_iter=150)
+test_model.fit(X_train, y_train)
+
+# Manually change fit parameters
+
+test_model.coef_ = np.array([coef_vals[1:]])
+test_model.intercept_ = np.array([coef_vals[0]])
+
+test_score = test_model.score(X_test, y_test)
+print(f'Reproduced best validation score: {test_score}')
 
 db.commit()
 db.close()
