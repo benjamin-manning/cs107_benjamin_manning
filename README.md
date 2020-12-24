@@ -1,6 +1,5 @@
-# master homework and PP readme
+# Homework Directory
 
-# Homework and Pair Programming folders
-## Content
-- homeworks; all of my homework files and directories
-- pair_programming; all of my paired programming exercises
+### Work for cs 207 at Harvard Systems: Development for Computational Science
+
+homeworks in master and on different labeled branches
